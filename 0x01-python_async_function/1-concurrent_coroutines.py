@@ -9,12 +9,12 @@ the delay (inclusive) for each 'wait_random' call.
 The function returns a sorted list of delays in ascending order.
 """
 import bisect
-
+from typing import List
 
 wait_random = __import__('0-basic_async_syntax').wait_random
 
 
-async def wait_n(n: int, max_delay: int) -> list:
+async def wait_n(n: int, max_delay: int) -> List[float]:
     resArr = []
     y = 0
     while y < n:
