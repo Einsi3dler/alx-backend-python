@@ -8,7 +8,7 @@ with the default set at 10
 """
 
 
-async def wait_random(max_delay: int = 10) -> int:
+async def wait_random(max_delay: int = 10) -> float:
     """
     Docummented functino here
     """
