@@ -1,36 +1,19 @@
 #!/usr/bin/env python3
 """
-This module contains an async function
-that returns a sorted list of random delays.
-
-Functions
-    task_wait_n(n: int, max_delay: int) -> list:
-        Takes in two integers, n and max_delay, and returns
-        a sorted list of n random delays between 0 and max_delay.
+A module for creating and running multiple asyncio Tasks concurrently.
 """
-
-import bisect
+import asyncio
 from typing import List
-
-wait_random = __import__('0-basic_async_syntax').wait_random
 task_wait_random = __import__('3-tasks').task_wait_random
 
 
 async def task_wait_n(n: int, max_delay: int) -> List[float]:
     """
-    Takes in two integers, n and max_delay,
-    and returns a sorted list of n random delays between 0 and max_delay.
-
-    Args:
-        n (int): The number of random delays to generate.
-        max_delay (int): The maximum delay time in seconds.
-
-    Returns:
-        List[float]: A sorted list of n random
-        delays between 0 and max_delay.
+    Create and run `n` asyncio Tasks that wait for random amounts of time
+    up to `max_delay` seconds. Returns a list of the Task objects, sorted
+    in ascending order by the time waited.
     """
-    resArr = []
-    for val in range(n):
-        bisect.insort(resArr, await wait_random(max_delay))
-    task_wait_random(max_delay)
-    return resArr
+    wait_times = await asyncio.gather(
+        *tuple(map(lambda _: task_wait_random(max_delay), range(n)))
+    )
+    return sorted(wait_times)
